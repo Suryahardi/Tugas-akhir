@@ -11,12 +11,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
 import { MaterialDesign } from './material/material.module';
+import { ForgotComponent } from './auth/forgot/forgot.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ForgotComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,8 @@ import { MaterialDesign } from './material/material.module';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatCardModule,
-    MaterialDesign
+    MaterialDesign,
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent]

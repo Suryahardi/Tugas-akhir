@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ApiService } from 'src/app/services/api.service';
 import { ProductDetailComponent } from '../product-detail/product-detail.component';
 
 @Component({
@@ -12,7 +13,8 @@ export class ProductComponent implements OnInit {
   book:any={};
   books:any=[];
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public api: ApiService
   ) { 
 
   }
@@ -29,28 +31,17 @@ export class ProductComponent implements OnInit {
     };
     this.getBooks();
   }
-
+  loading: boolean = false;
   getBooks()
   {
-    //4. memperbarui koleksi books
-    this.books=[
-      {
-        title:'Cara Jadi Idol',
-        author:'Sun Joong Pras',
-        publisher:'Sunhouse Digital',
-        year:2020,
-        isbn:'8298377474',
-        price:70000
-      },
-      {
-        title:'Cari Jadi Idol By Mas Pras',
-        author:'Sun Joong Pras',
-        publisher:'Sunhouse Digital',
-        year:2020,
-        isbn:'82983323455',
-        price:75000
-      }
-    ];
+    this.loading=true;
+      this.api.get('books').subscribe(result=>{
+        this.books=result;
+        this.loading=false;
+      },()=>{
+        this.loading=false;
+        alert('Ada masalah saat pengambilan data. Coba lagi');
+   })
   }  
 
   productDetail(data: any,idx: number)
@@ -65,16 +56,27 @@ export class ProductComponent implements OnInit {
         //jika idx=-1 (penambahan data baru) maka tambahkan data
        if(idx==-1)this.books.push(res);      
         //jika tidak maka perbarui data  
-       else this.books[idx]=res; 
+       else this.books[idx]=data; 
      }
    })
  }
- deleteProduct(idx: any)
+
+ loadingDelete: any={};
+ deleteProduct(id: string, _idx: number)
  {
-   var conf=confirm('Delete item?');
+   
+  var conf=confirm('Delete item?');
    if(conf)
-   this.books.splice(idx,1);
- }
+   {
+    this.loadingDelete[_idx]=true;
+    this.api.delete('books/'+this.books[_idx].id).subscribe(_result=>{
+      this.books.splice(_idx,1);
+      this.loadingDelete[_idx]=false;
+    },_error=>{
+      alert('Tidak dapat menghapus data');
+      this.loadingDelete[_idx]=false;
+    });
 
-
+   }
+  }
 }

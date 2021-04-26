@@ -4,20 +4,21 @@
           <h3>LOGIN</h3>
       </div>
     <mat-card-content>
-      <mat-form-field class="uk-width-1-1">
+      <mat-form-field class="uk-width-1-1" appearance="outline">
           <mat-label>Email</mat-label>
-          <input matInput placeholder="your email" value="Sushi">
+          <input matInput placeholder="your email" [(ngModel)]="user.email">
         </mat-form-field>
-        <mat-form-field class="uk-width-1-1">
+        <mat-form-field class="uk-width-1-1" appearance="outline">
           <mat-label>Password</mat-label>
-          <input type="password" matInput placeholder="Your password" value="Sushi">
+          <input type="password" matInput placeholder="Your password" [(ngModel)]="user.password">      
+
         </mat-form-field>
         <div class="uk-flex uk-flex-right">
             <div class="uk-width-expand">
               <button mat-button routerLink="/register">Create Account</button>
               <button mat-button routerLink="/forgot">Forgot</button>
             </div>
-            <button mat-raised-button color="primary" routerLink="/admin">LOGIN</button>
+            <button mat-raised-button color="primary" (click)="login()">LOGIN</button>
         </div>
     </mat-card-content>
   </mat-card>

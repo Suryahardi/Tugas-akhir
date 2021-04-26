@@ -14,6 +14,7 @@ import { MaterialDesign } from './material/material.module';
 import { ForgotComponent } from './auth/forgot/forgot.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatCardModule,
     MaterialDesign,
     MatSidenavModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

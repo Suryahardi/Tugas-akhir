@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-admin',
@@ -6,26 +8,32 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
+  api: any;
+  router: any;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.checkLogin();
   }
-  menu=[
-    {
-      name:'Dashboard',
-      icon:'dashboard',
-      url:'/admin/dashboard'
-    },
-    {
-      group:'Menu Group',
-      children:[
-        {
-          name:'Image Gallery',
-          icon:'images',
-          url:'/admin/images'
-        }
-      ]
+
+  checkLogin()
+  {
+    this.api.get('bookswithauth/status').subscribe((result: any)=>{
+      return;
+    }, (err: any)=>{
+      this.router.navigate(['/login']);
+    })
+  }
+
+  logout()
+  {
+    let conf=confirm('Keluar aplikasi?');
+    if (conf){
+      localStorage.removeItem('appToken');
+      window.location.reload();
     }
-  ];
+  }
+
+
 }

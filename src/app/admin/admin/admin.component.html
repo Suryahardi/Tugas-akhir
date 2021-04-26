@@ -1,59 +1,63 @@
 <ng-container>
-    <!--toolbar-->
-    <mat-toolbar class="example-header">
-    <button mat-icon-button (click)="sidenav.toggle()">
-    <mat-icon>menu</mat-icon>
-    </button>
-    <span>Our Angular</span>
-    <span class="spacer"></span>
-    </mat-toolbar>
-    <!--end toolbar-->
-    
-    <mat-sidenav-container class="example-container">
-    
-      <mat-sidenav
-       #sidenav mode="side" 
-       [position]="'start'" 
-       opened 
-       class="sidenav-left"
-      [fixedInViewport]="true" 
-      [fixedTopGap]="65"
-      [fixedBottomGap]="0">
-    
-<mat-nav-list>
-           <mat-list-item routerLink="/admin/dashboard">
-           <mat-icon matListIcon>dashboard</mat-icon>
-           <h3 matLine>Dashboard</h3>
-           </mat-list-item>
-           <mat-list-item routerLink="/admin/product">
-           <mat-icon matListIcon>camera_enhance</mat-icon>
-           <h3 matLine>Products</h3>
-           </mat-list-item>
-</mat-nav-list> 
+  <!--toolbar-->
+   <!--toolbar-->
+<mat-toolbar color="primary" class="example-header">
+  <button mat-icon-button (click)="sidenav.toggle()">
+  <mat-icon>menu</mat-icon>
+  </button>
+  <span>Pplweak
+  </span>
+  <div class="uk-width-expand"></div>
+  <small>Admin</small>
+  <button mat-button (click)="logout()">Logout</button>
+  </mat-toolbar>
+  <!--end toolbar-->
 
-
-
-    
-    
-      </mat-sidenav>
-    
-    <mat-sidenav #sidenav mode="side" [position]="'end'"  class="example-sidenav"
-    [fixedInViewport]="true" [fixedTopGap]="60"
+  <!--end toolbar-->
+  
+  <mat-sidenav-container class="example-container">
+  
+    <mat-sidenav
+     #sidenav mode="side" 
+     [position]="'start'" 
+     opened 
+     class="sidenav-left"
+    [fixedInViewport]="true" 
+    [fixedTopGap]="65"
     [fixedBottomGap]="0">
-    
-       
-    
+  
+    <mat-nav-list>
+      <mat-list-item routerLink="/admin/dashboard">
+      <mat-icon matListIcon>dashboard</mat-icon>
+      <h3 matLine>Dashboard</h3>
+      </mat-list-item>
+      <mat-list-item routerLink="/admin/product">
+      <mat-icon matListIcon>camera_enhance</mat-icon>
+      <h3 matLine>Products</h3>
+      </mat-list-item>
+    </mat-nav-list>
+
+  
+  
     </mat-sidenav>
-    <!--sidenav content-->
-    <mat-sidenav-content style="padding: 20px; background-color: #ccc;">
-    <!--halaman-halaman tampil disini-->
-    
-   
+  
+  <mat-sidenav #sidenav mode="side" [position]="'end'"  class="example-sidenav"
+  [fixedInViewport]="true" [fixedTopGap]="60"
+  [fixedBottomGap]="0">
+  
+     
+  
+  </mat-sidenav>
+  <!--sidenav content-->
+  <mat-sidenav-content style="padding: 20px; background-color: rgb(204, 204, 204);">
+  <!--halaman-halaman tampil disini-->
+  
+ 
 <router-outlet></router-outlet>
-    
-    
-    
-    </mat-sidenav-content>
-    <!--end sidenav content-->
-    </mat-sidenav-container>   
-    </ng-container>
+  
+  
+  
+  </mat-sidenav-content>
+  <!--end sidenav content-->
+  </mat-sidenav-container>   
+  </ng-container>

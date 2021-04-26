@@ -31,9 +31,10 @@
                     <td>{{book.year}}</td>
                     <td>{{book.price}}</td>
                     <td align="right">
+                        <button mat-button color="primary" (click)="upload(book, idx)">Upload Doc</button>
                         <button mat-button color="primary" (click)="productDetail(book,idx)">Edit</button>
-                        <button mat-button color="warn" (click)="deleteProduct(book.id,idx)" [disabled]="loadingDelete[idx]">{{loadingDelete[idx] ? 'Menghapus..':'Delete'}}</button>
-                    </td>
+                        <button mat-button color="warn" (click)="deleteProduct(book.id, idx)" [disabled]="loadingDelete[idx]">{{loadingDelete[idx] ? 'Deleting..':'Delete'}}</button>
+                    </td> 
                 </tr>
             </tbody>
         </table>

@@ -12,7 +12,8 @@
             <button mat-flat-button color="primary" (click)="productDetail({},-1)">Tambah Produk</button>
         </div>
         <table class="uk-table uk-table-middle uk-table-divider">
-            <thead>                
+            <thead> 
+                <th></th>               
                 <th>No</th>
                 <th>Judul</th>
                 <th>Penulis</th>
@@ -24,11 +25,17 @@
             </thead>
             <tbody>
                 <tr *ngFor="let book of books; let idx=index">
+                    <td>
+                        <button mat-icon-button (click)="downloadFile(book)" *ngIf="book.url !=''">
+                            <mat-icon>download</mat-icon>
+                        </button>
+                    </td>
                     <td>{{idx+1}}</td>
                     <td>{{book.title}}</td>
                     <td>{{book.author}}</td>
                     <td>{{book.publisher}}</td>
                     <td>{{book.year}}</td>
+                    <td>{{book.ISBN}}</td>
                     <td>{{book.price}}</td>
                     <td align="right">
                         <button mat-button color="primary" (click)="upload(book, idx)">Upload Doc</button>

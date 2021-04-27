@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import * as FileSaver from 'file-saver';
 import { ApiService } from 'src/app/services/api.service';
 import { FileUploaderComponent } from '../file-uploader/file-uploader.component';
 import { ProductDetailComponent } from '../product-detail/product-detail.component';
@@ -90,4 +91,9 @@ export class ProductComponent implements OnInit {
  })
 }
 
-}
+downloadFile(data:any)
+      {
+        FileSaver.saveAs('http://api.sunhouse.co.id/bookstore/'+data.url);
+        //FileSaver.saveAs('');
+      }
+    }

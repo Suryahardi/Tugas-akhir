@@ -53,4 +53,11 @@ if(event.target.files.length>0){
         alert(data.message);
       }
     }
+
+    updateBook(data: any)
+    {
+      this.api.put('book/'+this.dialogData.id, {url: data.url}).subscribe(res=>{
+        console.log(res);
+      });
+    }
   }

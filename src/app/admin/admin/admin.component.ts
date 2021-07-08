@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-admin',
@@ -8,22 +7,14 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
-  api: any;
-  router: any;
 
-  constructor() { }
+  loading:boolean=true;
+  constructor(
+    public router:Router
+  ) { }
 
   ngOnInit(): void {
-    this.checkLogin();
-  }
 
-  checkLogin()
-  {
-    this.api.get('bookswithauth/status').subscribe((result: any)=>{
-      return;
-    }, (err: any)=>{
-      this.router.navigate(['/login']);
-    })
   }
 
   logout()
@@ -31,9 +22,9 @@ export class AdminComponent implements OnInit {
     let conf=confirm('Keluar aplikasi?');
     if (conf){
       localStorage.removeItem('appToken');
-      window.location.reload();
+      this.router.navigate(['/login']);
+      
     }
   }
-
 
 }

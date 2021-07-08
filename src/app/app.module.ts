@@ -15,6 +15,9 @@ import { ForgotComponent } from './auth/forgot/forgot.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -29,12 +32,13 @@ import { FormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatCardModule,
+    AngularFireModule.initializeApp(environment.firebase),
     MaterialDesign,
     MatSidenavModule,
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

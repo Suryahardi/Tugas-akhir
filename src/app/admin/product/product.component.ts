@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
-import * as FileSaver from 'file-saver';
-import { ApiService } from 'src/app/services/api.service';
-import { FileUploaderComponent } from '../file-uploader/file-uploader.component';
 import { ProductDetailComponent } from '../product-detail/product-detail.component';
+
 
 @Component({
   selector: 'app-product',
@@ -12,88 +12,66 @@ import { ProductDetailComponent } from '../product-detail/product-detail.compone
 })
 export class ProductComponent implements OnInit {
   title:any;
-  book:any={};
-  books:any=[];
+  books:any={};
+  userData:any = {};
   constructor(
-    public dialog: MatDialog,
-    public api: ApiService
-  ) { 
+    public dialog:MatDialog,
+    public auth:AngularFireAuth,
+    public db :AngularFirestore
+  ) {
 
-  }
+   }
 
   ngOnInit(): void {
-    this.title='Product';
-    this.book={
-      title:'Cara Jadi Idol',
-      author:'Sun Joong Pras',
-      publisher:'Sunhouse Digital',
-      year:2020,
-      isbn:'8298377474',
-      price:70000
-    };
-    this.getBooks();
+    this.title='Shop';
+    this.auth.user.subscribe(user=>{
+      this.userData = user;
+      this.getBooks();
+    })
   }
-  loading: boolean = false;
+
+  loading:boolean | undefined;
   getBooks()
   {
     this.loading=true;
-    this.api.get('bookswithauth').subscribe(result=>{
+    this.db.collection('books',ref=>{
+      return ref.where('uid','==',this.userData.uid);
+    }).valueChanges({idField : 'id'}).subscribe(result=>{
+      console.log(result);
       this.books=result;
       this.loading=false;
     },error=>{
       this.loading=false;
-   })
-  }  
-
-  productDetail(data: any,idx: number)
- {
-   let dialog=this.dialog.open(ProductDetailComponent, {
-     width:'400px',
-     data:data
-   });
-   dialog.afterClosed().subscribe(res=>{
-     if(res)
-     {
-        //jika idx=-1 (penambahan data baru) maka tambahkan data
-       if(idx==-1)this.books.push(res);      
-        //jika tidak maka perbarui data  
-       else this.books[idx]=data; 
-     }
-   })
- }
-
- loadingDelete: any={};
- deleteProduct(id: string, _idx: number)
- {
-   
-  var conf=confirm('Delete item?');
-   if(conf)
-   {
-    this.loadingDelete[_idx]=true;
-    this.api.delete('books/'+this.books[_idx].id).subscribe(_result=>{
-      this.books.splice(_idx,1);
-      this.loadingDelete[_idx]=false;
-    },_error=>{
-      alert('Tidak dapat menghapus data');
-      this.loadingDelete[_idx]=false;
     });
-
-   }
   }
-  upload(data: any, idx: any)
-{
- let dialog=this.dialog.open(FileUploaderComponent, {
-   width:'400px',
-   data:data
- });
- dialog.afterClosed().subscribe(res=>{
-   return;
- })
-}
 
-downloadFile(data:any)
-      {
-        FileSaver.saveAs('http://api.sunhouse.co.id/bookstore/'+data.url);
-        //FileSaver.saveAs('');
+
+    productDetail(data: any,idx: number)
+    {
+      let dialog= this.dialog.open(ProductDetailComponent, {
+          width: '400px',
+          data: data,
+      });
+        dialog.afterClosed().subscribe(result=> {
+        return;
+        });
       }
+
+
+      loadingDelete:any={};
+      DeleteProduct(id: any,idx: any)
+      {
+        var conf=confirm('Delete item?');
+        if(conf)
+        {
+          this.db.collection('books').doc(id).delete().then(result=>{
+            this.books.splice(idx,1);
+            this.loadingDelete[idx]=false;
+          }).catch(error=>{
+            this.loadingDelete[idx]=false;
+            alert('Tidak dapat menghapus data');
+          });
+        }
+      }
+      
     }

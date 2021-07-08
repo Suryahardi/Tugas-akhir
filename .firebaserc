@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "myproject-77739": {
+      "hosting": {
+        "my-praktikumm": [
+          "myproject-77739"
+        ]
+      }
+    }
+  }
+}

@@ -23,7 +23,7 @@
               <button mat-button routerLink="/login">I have an account</button>
               <button mat-button routerLink="/forgot">Forgot</button>
             </div>
-            <button mat-raised-button color="primary" (click)="register()" [disabled]="loading">{{ loading ? 'TUNGGU...':'REGISTER'}}</button>
+            <button mat-raised-button color="primary" (click)="register(user)" [disabled]="loading">{{ loading ? 'TUNGGU...':'REGISTER'}}</button>
         </div>
     </mat-card-content>
   </mat-card>
